@@ -3,16 +3,13 @@ package workshop.task_2_2;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toList;
 import static org.junit.Assert.assertEquals;
-
 /**
  * Created by olenasyrota on 6/28/16.
  */
@@ -26,8 +23,10 @@ public class Exercise2OrdersTest extends CompanyDomain
     {
         // implement customer.getTotalOrderValue() for this exercise;
 
-        Map<String, Double> map = null;
-
+        Map<String, Double> map = new HashMap<>();
+        company.getCustomers().stream().forEach(x -> {
+            map.merge(x.getCity(), x.getTotalOrderValue(), (oldOrder, newOrder) -> oldOrder + newOrder);
+        });
         assertEquals(2, map.size());
         assertEquals(446.25, map.get("London"), 0.0);
         assertEquals(857.0, map.get("Liphook"), 0.0);
@@ -41,8 +40,14 @@ public class Exercise2OrdersTest extends CompanyDomain
     @Test
     public void mostExpensiveItem()
     {
-        Map<Double, List<Customer>> map = null;
-
+        Map<Double, List<Customer>> map = new HashMap<>();
+        company.getCustomers().stream().forEach(x -> {
+            map.merge(x.getMostExpensiveItemValue(), Arrays.asList(x), (oldCustomers, newCustomer) -> {
+                ArrayList<Customer> resArrayList = new ArrayList<>(oldCustomers);
+                resArrayList.addAll(newCustomer);
+                return resArrayList;
+            });
+        });
         Assert.assertEquals(2, map.size());
         Assert.assertEquals(2, map.entrySet().size());
         Assert.assertEquals(

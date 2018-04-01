@@ -1,8 +1,9 @@
 package workshop.task_2_2;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+//import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 
@@ -48,12 +49,12 @@ public class Order {
     }
 
     public double getValue() {
-        // get total of all lineItems
-        throw new NotImplementedException();
+        // get total of all lineItems Done
+        return lineItems.stream().mapToDouble(x -> x.getValue()).reduce((acc, x) -> acc+=x).getAsDouble();
     }
 
     public double getMostExpensiveItemValue() {
-        // get value of the most expensive item
-        throw new NotImplementedException();
+        // get value of the most expensive item Done
+        return lineItems.stream().mapToDouble(x -> x.getValue()).max().getAsDouble();
     }
 }

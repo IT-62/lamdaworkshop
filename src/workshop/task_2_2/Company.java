@@ -1,6 +1,6 @@
 package workshop.task_2_2;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+//import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +14,8 @@ public class Company {
     private final String name;
     private final List<Customer> customers = new ArrayList<>();
     // suppliers are array based.
-    private Supplier[] suppliers = new Supplier[0];
-
+    //private Supplier[] suppliers = new Supplier[0];
+    private ArrayList<Supplier> suppliers = new ArrayList<>();
     public Company(String name) {
         this.name = name;
     }
@@ -35,11 +35,12 @@ public class Company {
     public List<Order> getOrders() {
         assert (false);// Refactor this code to use lambdas
 
-        List<Order> orders = new ArrayList<Order>();
-        for (Customer customer : this.customers) {
-            orders.addAll(customer.getOrders());
-        }
-        return orders;
+//        List<Order> orders = new ArrayList<Order>();
+//        for (Customer customer : this.customers) {
+//            orders.addAll(customer.getOrders());
+//        }
+        //return orders;
+        return customers.stream().flatMap(x -> x.getOrders().stream()).collect(Collectors.toList());
     }
 
     public Customer getMostRecentCustomer() {
@@ -48,19 +49,19 @@ public class Company {
 
     public void addSupplier(Supplier supplier) {
         // need to replace the current array of suppliers with another, larger array
-        // Of course, normally one would not use an array.
-
-        final Supplier[] currentSuppliers = this.suppliers;
-        this.suppliers = new Supplier[currentSuppliers.length + 1];
-        System.arraycopy(currentSuppliers, 0, this.suppliers, 0, currentSuppliers.length);
-        this.suppliers[this.suppliers.length - 1] = supplier;
+        // Of course, normally one would not use an array. Done?
+        suppliers.add(supplier);
+//        final Supplier[] currentSuppliers = this.suppliers;
+//        this.suppliers = new Supplier[currentSuppliers.length + 1];
+//        System.arraycopy(currentSuppliers, 0, this.suppliers, 0, currentSuppliers.length);
+//        this.suppliers[this.suppliers.length - 1] = supplier;
     }
 
-    public Supplier[] getSuppliers() {
+    public ArrayList<Supplier> getSuppliers() {
         return this.suppliers;
     }
 
     public Customer getCustomerNamed(String name) {
-        throw new NotImplementedException();
+        return customers.stream().filter(x -> x.getName().equals(name)).limit(1).reduce((acc, x) -> acc = x).get();
     }
 }

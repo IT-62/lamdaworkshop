@@ -11,8 +11,12 @@ public class AbbrivationBuilder {
 
 
     public static String build(List<String> list) {
-        // implement function body in order all tests to complete successfully
-        return null;
+        StringBuilder resStringBuilder = new StringBuilder(list.size());
+        list.stream().forEach(x -> {
+            if(x != null && x.length() > 0)
+                resStringBuilder.append(x.charAt(0));
+        });
+        return resStringBuilder.toString();
     }
 
 }

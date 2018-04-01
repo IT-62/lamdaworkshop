@@ -25,6 +25,7 @@ public class DeveloperServiceTest {
         Developer busy = new Developer("pragmatic");
         busy.add("java");
         busy.add("javascript");
+        busy.add("scala");
 
         team.add(polyglot);
         team.add(busy);

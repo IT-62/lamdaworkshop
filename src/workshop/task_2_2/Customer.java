@@ -1,6 +1,5 @@
 package workshop.task_2_2;
-
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+//import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,10 +37,12 @@ public class Customer {
     }
 
     public double getTotalOrderValue() {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
+        return orders.stream().map(x -> x.getValue()).reduce((acc, x) -> acc+=x).get();
     }
 
     public double getMostExpensiveItemValue() {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
+        return orders.stream().map(x -> x.getMostExpensiveItemValue()).max(Double::compareTo).get();
     }
 }
